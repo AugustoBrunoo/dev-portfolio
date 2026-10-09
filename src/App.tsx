@@ -1,35 +1,38 @@
 
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
+
 import Background from './components/Background';
 import { Header } from './components/layout/Header';
 import { Footer } from './components/layout/Footer';
-import { Hero } from './components/sections/Hero';
-import { About } from './components/sections/About';
-import { Experience } from './components/sections/Experience';
-import { Projects } from './components/sections/Projects';
-import { Contact } from './components/sections/Contact';
+
+import { Home } from './pages/Home';
+import { ProjectsPage } from './pages/ProjectsPage';
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
 
 function App() {
   return (
-    <>
+    <Router>
+      <ScrollToTop />
       <Background />
       <div className="veil" aria-hidden="true"></div>
 
       <Header />
 
-      <main>
-        <section id="topo">
-          <div className="wrap">
-            <Hero />
-          </div>
-        </section>
-        <About />
-        <Experience />
-        <Projects />
-        <Contact />
-      </main>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/projetos" element={<ProjectsPage />} />
+      </Routes>
 
       <Footer />
-    </>
+    </Router>
   );
 }
 

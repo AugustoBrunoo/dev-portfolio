@@ -1,0 +1,51 @@
+.pp-hero { display: grid; grid-template-columns: 1.35fr .9fr; gap: 40px; align-items: end; padding: 96px 0 64px; min-height: 70vh; position: relative; z-index: 2; }
+.pp-path { font: 400 13px var(--mono); color: var(--accent-soft); margin: 0 0 18px; }
+.pp-path::after { content: "▌"; margin-left: 4px; color: var(--accent); animation: pp-blink 1s steps(1) infinite; }
+@keyframes pp-blink { 50% { opacity: 0; } }
+.pp-h1 { font: 700 clamp(2.6rem, 7vw, 5.2rem)/1 var(--mono); letter-spacing: -.045em; margin: 0 0 22px; max-width: none; text-align: left; }
+.pp-lead { font: 300 clamp(1.05rem, 2vw, 1.35rem)/1.55 var(--sans); color: #d9d1e6; max-width: 30em; margin: 0; border-left: 2px solid var(--accent); padding-left: 20px; }
+
+.pp-counter { padding: 32px 34px; position: relative; overflow: hidden; }
+.pp-counter::before { content: ""; position: absolute; left: 0; top: 0; height: 2px; width: 100%; background: linear-gradient(90deg, var(--accent), transparent); }
+.pp-counter .num { font: 700 clamp(5rem, 13vw, 8.5rem)/.9 var(--mono); letter-spacing: -.06em; color: var(--text); text-shadow: 0 0 40px rgba(168,85,247,.55); display: block; font-variant-numeric: tabular-nums; }
+.pp-counter .lbl { font: 500 15px var(--mono); color: var(--accent-soft); margin-top: 16px; display: block; }
+.pp-counter .sm { font: 400 12.5px var(--mono); color: var(--muted); display: block; margin-top: 4px; }
+
+.pp-bar { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between; margin-bottom: 28px; position: relative; z-index: 2; }
+.pp-filters { display: flex; flex-wrap: wrap; gap: 8px; }
+.pp-count { font: 400 12.5px var(--mono); color: var(--muted); }
+
+.pp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; grid-auto-flow: dense; position: relative; z-index: 2; }
+.pp-card { --mx: 50%; --my: 50%; position: relative; overflow: hidden; padding: 26px; display: flex; flex-direction: column; gap: 14px; opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease, border-color .25s; cursor: pointer; }
+.pp-card.in { opacity: 1; transform: none; }
+.pp-card.feat { grid-column: 1 / -1; }
+.pp-card::before { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity .3s; background: radial-gradient(380px circle at var(--mx) var(--my), rgba(168,85,247,.24), transparent 60%); }
+.pp-card:hover { border-color: var(--line-strong); }
+.pp-card:hover::before { opacity: 1; }
+.pp-card .p { font: 400 12px var(--mono); color: var(--muted); display: flex; justify-content: space-between; gap: 8px; }
+.pp-card .p b { font-weight: 400; color: var(--accent); }
+.pp-card h3 { font: 700 clamp(1.15rem, 2vw, 1.4rem)/1.2 var(--mono); letter-spacing: -.025em; margin: 0; }
+.pp-card.feat h3 { font-size: clamp(1.4rem, 2.6vw, 1.9rem); }
+.pp-card p.d { margin: 0; color: #cfc6de; font-size: 15px; flex: 1; }
+
+.pp-tags { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 4px; }
+.pp-tag { font: 400 11.5px var(--mono); padding: 3px 10px; border-radius: 6px; border: 1px solid currentColor; background: rgba(255,255,255,.03); display: inline-flex; align-items: center; gap: 6px; }
+.pp-tag::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+.pp-tag[data-k=f] { color: var(--front); } .pp-tag[data-k=b] { color: var(--back); } .pp-tag[data-k=d] { color: var(--data); }
+
+.pp-links { display: flex; gap: 14px; font: 500 13px var(--mono); }
+.pp-links a { text-decoration: none; color: var(--accent-soft); border-bottom: 1px solid var(--line-strong); position: relative; z-index: 10; }
+.pp-links a:hover { color: var(--text); }
+
+@media(max-width:900px) {
+  .pp-hero { grid-template-columns: 1fr; padding: 72px 0 40px; min-height: 0; }
+  .pp-grid { grid-template-columns: repeat(2, 1fr); }
+  .pp-h1 { text-align: left; }
+}
+@media(max-width:620px) {
+  .pp-grid { grid-template-columns: 1fr; }
+  .pp-card.feat { grid-column: auto; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .pp-card { opacity: 1; transform: none; }
+}

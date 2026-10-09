@@ -1,7 +1,10 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import FolderFloat from '../ui/FolderFloat';
 
 export const Projects: React.FC = () => {
+  const navigate = useNavigate();
+  
   const projectItems = [
     'PrimeInvest',
     'Radar Territorial',
@@ -30,8 +33,8 @@ export const Projects: React.FC = () => {
             transition: 'border-color 0.25s, transform 0.25s'
           }}
           onClick={() => {
-            // Placeholder for navigation
-            alert('Navegando para a página de todos os projetos!');
+            navigate('/projetos');
+            window.scrollTo(0, 0);
           }}
           onMouseEnter={(e) => e.currentTarget.style.borderColor = 'var(--line-strong)'}
           onMouseLeave={(e) => e.currentTarget.style.borderColor = 'var(--line)'}

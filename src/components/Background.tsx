@@ -1,10 +1,14 @@
 import { useEffect, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import * as THREE from 'three';
 
 export default function Background() {
   const mountRef = useRef<HTMLDivElement>(null);
+  const { pathname } = useLocation();
 
   useEffect(() => {
+    if (pathname === '/projetos') return;
+
     const P = {
       color: '#a855f7', backgroundColor: '#07020d', speed: 0.35, curvature: 0.18,
       scanlineStrength: 0.2, scanlineFrequency: 180, waveAmplitude: 0.25,
@@ -118,11 +122,11 @@ void main(){
     ro.observe(container);
     resize();
     
-    const clock = new THREE.Clock();
     const target = V2(0, 0);
     const current = V2(0, 0);
     const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
     let last = 0;
+    let lastTime = performance.now();
     let animationId: number;
     
     const render = (now: number) => {
@@ -131,13 +135,16 @@ void main(){
       const interval = 1000 / P.fps;
       if (now - last < interval) return;
       last = now - ((now - last) % interval);
-      const d = Math.min(clock.getDelta(), 0.1);
+      
+      const d = Math.min((now - lastTime) / 1000, 0.1);
+      lastTime = now;
+      
       if (!still) material.uniforms.uTime.value += d * P.speed;
       current.lerp(target, 0.08);
       material.uniforms.uPointer.value.copy(current);
       renderer.render(scene, camera);
     };
-    render(0);
+    render(performance.now());
     
     const onMove = (e: PointerEvent) => {
       target.set((e.clientX / innerWidth) * 2 - 1, -((e.clientY / innerHeight) * 2 - 1));
@@ -155,7 +162,9 @@ void main(){
       if (renderer) renderer.dispose();
       if (container.firstChild) container.removeChild(container.firstChild);
     };
-  }, []);
+  }, [pathname]);
+
+  if (pathname === '/projetos') return null;
 
   return <div id="bg" aria-hidden="true" ref={mountRef}></div>;
 }

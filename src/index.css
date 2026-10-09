@@ -208,6 +208,7 @@ nav a:hover {
   object-fit: cover;
   display: none;
   filter: saturate(.9) contrast(1.05);
+  z-index: 10;
 }
 
 .avatar.has img {
